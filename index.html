@@ -3,10 +3,68 @@
 <head>
   <meta charset="UTF-8">
   <title>Foi Goleada?</title>
+  <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
 </head>
 
 <body>
   <div id="root"></div>
+  <script type="text/babel">
+    class NameForm extends React.Component {
+      constructor(props) {
+        super(props);
+        this.state = {one: 0, two: 0};
+
+        this.handleChangeOne = this.handleChangeOne.bind(this);
+        this.handleChangeTwo = this.handleChangeTwo.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+      }
+
+      handleChangeOne(event) {
+        this.setState({one: event.target.value});
+      }
+
+      handleChangeTwo(event) {
+        this.setState({two: event.target.value});
+      }
+
+      handleSubmit(event) {
+        var one = parseInt(this.state.one);
+        var two = parseInt(this.state.two)
+        var placar = 'Placar: ' +
+              one + ' x ' + two;
+
+        var foiGoleada = Math.abs(one-two) > 3 ? 'SIM' : 'NÃO';
+        var chuvaDeGols = (one + two) > 5 ? 'CHUVA DE GOLS' : '';
+        this.setState({foiGoleada: foiGoleada, chuvaDeGols: chuvaDeGols});
+
+              // parseInt(this.state.one) - parseInt(this.state.two));
+        event.preventDefault();
+      }
+
+      render() {
+        return (
+          <form onSubmit={this.handleSubmit}>
+            <label>
+              <input type="text" value={this.state.one} onChange={this.handleChangeOne} />&nbsp;
+              x
+              &nbsp;
+              <input type="text" value={this.state.two} onChange={this.handleChangeTwo} />
+            </label>
+            <input type="submit" value="Foi goleada?" />
+            <h1>{this.state.foiGoleada}</h1>
+            <h2>{this.state.chuvaDeGols}</h2>
+          </form>
+        );
+      }
+    }
+
+    ReactDOM.render(
+      <NameForm />,
+      document.getElementById('root')
+    );
+  </script>
 </body>
 
 </html>
