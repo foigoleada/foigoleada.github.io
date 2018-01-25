@@ -3,33 +3,73 @@
 <head>
   <meta charset="UTF-8">
   <title>Foi Goleada?</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
   <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
   <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+  <script defer src="https://use.fontawesome.com/releases/v5.0.0/js/all.js"></script>
+
+
+  <style>
+    .column p {
+        padding: 10px;
+    }
+
+    .contente {
+        height: 100%
+    }
+
+    h1 {
+        padding: 10px;
+    }
+  </style>
+
 </head>
 
 <body>
-  <div id="root"></div>
+  <section class="hero is-small is-primary is-bold">
+    <div class="hero-body">
+      <div class="container">
+        <h1 class="title">
+          Foi Goleada?
+        </h1>
+      </div>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container" id="root"></div>
+  </section>
   <script type="text/babel">
+    function stringToNumber(string){
+      var num = parseInt(string);
+      return isNaN(num) ? 0 : num;
+    }
+
     class NameForm extends React.Component {
+
       constructor(props) {
         super(props);
-        this.state = {one: 0, two: 0};
+        var init = window.location.search.slice(1);
+        var values = init.split('x');
+
+        this.state = {one: stringToNumber(values[0]), two: stringToNumber(values[1])};
 
         this.handleChangeOne = this.handleChangeOne.bind(this);
         this.handleChangeTwo = this.handleChangeTwo.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
       }
 
       handleChangeOne(event) {
-        this.setState({one: event.target.value});
+        if (event.target.value > -1) {
+          this.setState({one: event.target.value});
+        }
       }
 
       handleChangeTwo(event) {
         this.setState({two: event.target.value});
       }
 
-      handleSubmit(event) {
+      render() {
         var one = parseInt(this.state.one);
         var two = parseInt(this.state.two)
         var placar = 'Placar: ' +
@@ -37,25 +77,27 @@
 
         var foiGoleada = Math.abs(one-two) > 3 ? 'SIM' : 'NÃO';
         var chuvaDeGols = (one + two) > 5 ? 'CHUVA DE GOLS' : '';
-        this.setState({foiGoleada: foiGoleada, chuvaDeGols: chuvaDeGols});
 
-              // parseInt(this.state.one) - parseInt(this.state.two));
-        event.preventDefault();
-      }
-
-      render() {
         return (
-          <form onSubmit={this.handleSubmit}>
-            <label>
-              <input type="text" value={this.state.one} onChange={this.handleChangeOne} />&nbsp;
-              x
-              &nbsp;
-              <input type="text" value={this.state.two} onChange={this.handleChangeTwo} />
-            </label>
-            <input type="submit" value="Foi goleada?" />
-            <h1>{this.state.foiGoleada}</h1>
-            <h2>{this.state.chuvaDeGols}</h2>
-          </form>
+          <div>
+            <div className='columns is-centered'>
+              <div className='column'>
+                  <p><input className='input' type='number' value={this.state.one} onChange={this.handleChangeOne} /></p>
+              </div>
+              <div className='column'>
+                <p className='has-text-centered'>x</p>
+              </div>
+              <div className='column'>
+                  <p><input className='input' type='number' value={this.state.two} onChange={this.handleChangeTwo} /></p>
+              </div>
+            </div>
+            <p className='has-text-centered'>
+              <h1 className='title'>{foiGoleada}</h1>
+            </p >
+            <p className='has-text-centered'>
+              <h1 className='title'>{chuvaDeGols}</h1>
+            </p >
+          </div>
         );
       }
     }
