@@ -69,6 +69,10 @@
         this.setState({two: event.target.value});
       }
 
+      checkEasterEgg(one,two) {
+        return one === 1 && two === 7;
+      }
+
       render() {
         var one = parseInt(this.state.one);
         var two = parseInt(this.state.two)
@@ -76,7 +80,10 @@
               one + ' x ' + two;
 
         var foiGoleada = Math.abs(one-two) > 3 ? 'SIM' : 'NÃO';
-        var chuvaDeGols = (one + two) > 5 ? 'CHUVA DE GOLS' : '';
+
+        const easterEggEnabled = this.checkEasterEgg(one,two);
+
+        var chuvaDeGols = easterEggEnabled ? 'LÁ VEM ELES DE NOVO' : (one + two) > 5 ? 'CHUVA DE GOLS' : '';
 
         return (
           <div>
@@ -97,6 +104,9 @@
             <p className='has-text-centered'>
               <h1 className='title'>{chuvaDeGols}</h1>
             </p >
+            { easterEggEnabled && <p className='has-text-centered'>
+              <img src="assets/khedira.gif" />
+            </p > }
           </div>
         );
       }
