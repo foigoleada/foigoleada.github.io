@@ -73,10 +73,6 @@
         return one === 1 && two === 7;
       }
 
-      reverContra(one,two) {
-        return one === 5 && two === 0;
-      }
-
       render() {
         var one = parseInt(this.state.one);
         var two = parseInt(this.state.two)
@@ -87,9 +83,7 @@
 
         const easterEggEnabled = this.checkEasterEgg(one,two);
 
-        const reverContraEnabled = this.reverContra(one,two);
-
-        var chuvaDeGols = easterEggEnabled ? 'LÁ VEM ELES DE NOVO' : reverContraEnabled ? 'RÉVER CONTRA' : (one + two) > 5 ? 'CHUVA DE GOLS' : '';
+        var chuvaDeGols = easterEggEnabled ? 'LÁ VEM ELES DE NOVO' : (one + two) > 5 ? 'CHUVA DE GOLS' : '';
 
         return (
           <div>
@@ -112,9 +106,6 @@
             </p >
             { easterEggEnabled && <p className='has-text-centered'>
               <img src="assets/khedira.gif" />
-            </p > }
-            { reverContraEnabled && <p className='has-text-centered'>
-              <img src="assets/rever_contra.jpg" />
             </p > }
           </div>
         );
