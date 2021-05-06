@@ -1,8 +1,8 @@
-# foigoleada.github.io
+# Foi Goleada?
 
 Plataforma utilizada para verificação se um placar pode ou não ser considerado uma goleada.
 
-*http://foigoleada.com*
+https://foigoleada.github.io/
 
 ## Metodologia de desenvolvimento
 
